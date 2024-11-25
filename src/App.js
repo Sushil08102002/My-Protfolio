@@ -1,3 +1,4 @@
+// require('dotenv').config();
 import styled, { ThemeProvider } from "styled-components";
 import {darkTheme} from "./utils/Themes";
 import Navbar from "./components/Navbar";
@@ -11,6 +12,7 @@ import StartCanvas from "./components/canvas/Stars";
 import Projects from "./components/sections/Projects";
 import Contact from "./components/sections/Contact";
 import Footer from "./components/sections/Footer";
+
 
 
 const Body = styled.div`

@@ -45,7 +45,7 @@ const Desc = styled.div`
   }
 `;
 
-const ContactForm = styled.div`
+const ContactForm = styled.form`
   width: 95%;
   max-width: 600px;
   display: flex;
@@ -102,23 +102,24 @@ const ContactButton = styled.input`
   color: ${({ theme }) => theme.text_primary};
   font-size: 18px;
   font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 `;
+
+const serviceID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
+const templateID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
+const userID = process.env.REACT_APP_EMAILJS_USER_ID;
+
 
 const Contact = () => {
   const form = useRef();
   const handelSubmit = (e) => {
     e.preventDefault();
-    emailjs
-      .sendForm(
-        "service_tox7kqs",   //your-serviceid
-        "template_nv7k7mj",  // your_template_id
-        form.current,
-        "SybVGsYS52j2TfLbi"  // tourapiid/tokeni
-      )
+    emailjs.sendForm(serviceID,templateID,form.current,userID)
       .then(
         (result) => {
-          alert("Message Sent");
-          form.current.result();
+          alert("Message Sent" + result.text);
+          form.current.reset();
         },
         (error) => {
           alert(error);
@@ -136,7 +137,7 @@ const Contact = () => {
         >
           Feel free to reach out to me for any questions or opportunities!
         </Desc>
-        <ContactForm onSubmit={handelSubmit}>
+        <ContactForm ref={form} onSubmit={handelSubmit}>
           <ContactTitle>Email Me 🚀</ContactTitle>
           <ContactInput placeholder="Your Email" name="from_email" />
           <ContactInput placeholder="Your Name" name="from_name" />
